@@ -1,0 +1,54 @@
+h2 {
+    color: red;
+}
+
+/* HEX, RGB */
+body > h2#heading {
+    color: #0275d8;
+}
+
+h2#heading {
+    color: yellow;
+}
+
+#heading {
+    color: green;
+    font-size: 32px;
+}
+
+/* Chọn thẻ h2 có id là heading */
+
+/* h2 #heading : Chọn thẻ có id là heading nằm trong thẻ h2 */
+/* h2 > #heading : Chọn thẻ có id là heading là con trực tiếp của thẻ h2 */
+
+.text-center {
+    text-align: center;
+}
+
+.text-big {
+    font-size: 40px;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+h3.text-big.text-center.text-uppercase {
+
+}
+
+h3 .text-big .text-center .text-uppercase {
+    
+}
+
+h3 .text-big.text-center .text-uppercase {
+    
+}
+
+h3 > div.text-big.text-center .text-uppercase {
+    
+}
+
+h3#heading div.text-big.text-center > p.text-uppercase {
+    
+}
