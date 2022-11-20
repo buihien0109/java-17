@@ -1,0 +1,37 @@
+.box {
+    width: 200px;
+    height: 200px;
+    background-color: blueviolet;
+
+    /* transition-property: width, height;
+    transition-duration: 1s, 2s; */
+    transition: all 1s 1s;
+}
+
+.box:hover {
+    width: 400px;
+    height: 300px;
+}
+
+.content {
+    margin: auto;
+    width: 500px;
+    background-color: #000;
+    color: bisque;
+    padding: 20px;
+
+    overflow: hidden;
+}
+
+.content h3 {
+    position: relative;
+    left: 550px;
+    opacity: 0;
+
+    transition: all 1s;
+}
+
+.content:hover h3 {
+    left: 0;
+    opacity: 1;
+}

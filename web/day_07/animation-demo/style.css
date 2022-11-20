@@ -1,0 +1,82 @@
+.box {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+
+    animation: example 2s forwards;
+    position: relative;
+}
+
+@keyframes example {
+    0% {
+        top: 0;
+        left: 0;
+    }
+    25% {
+        top: 0;
+        left: 300px;
+        background-color: blue;
+    }
+    50% {
+        top: 300px;
+        left: 300px;
+        background-color: yellow;
+    }
+    75% {
+        top: 300px;
+        left: 0;
+        background-color: tomato;
+    }
+    100% {
+        top: 0;
+        left: 0;
+        background-color: red;
+    }
+}
+
+.banner {
+    background-color: black;
+    padding: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+.banner h2 {
+    animation: flip;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+/* .banner h2 {
+    position: relative;
+    animation : translate 1s;
+}
+
+.banner p {
+    position: relative;
+    animation : translate-reverse 1s;
+}
+
+@keyframes translate {
+    0% {
+        left: 200px;
+        opacity: 0;
+    }
+    100% {
+        left: 0;
+        opacity: 1;
+    }
+    
+}
+
+@keyframes translate-reverse {
+    0% {
+        left: -200px;
+        opacity: 0;
+    }
+    100% {
+        left: 0;
+        opacity: 1;
+    }
+    
+} */
