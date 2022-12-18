@@ -4,7 +4,7 @@ import book_management.service.BookService;
 
 import java.util.Scanner;
 
-// Lấy thông tin người dùng tương tác với hệ thống --> gọi các hàm sử lý tương ứng ở trong service
+// Lấy thông tin người dùng tương tác với hệ thống --> gọi các hàm xử lý tương ứng ở trong service
 public class BookController {
     public BookService bookService = new BookService();
 
