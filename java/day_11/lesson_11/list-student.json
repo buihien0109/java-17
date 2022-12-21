@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Nguyễn A",
+    "age": 30,
+    "email": "a@gmail.com"
+  },
+  {
+    "id": 2,
+    "name": "Ngô B",
+    "age": 31,
+    "email": "b@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Trần C",
+    "age": 23,
+    "email": "c@gmail.com"
+  },
+  {
+    "id": 4,
+    "name": "Phan D",
+    "age": 26,
+    "email": "d@gmail.com"
+  }
+]

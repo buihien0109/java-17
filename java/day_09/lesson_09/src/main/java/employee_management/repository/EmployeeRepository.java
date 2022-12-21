@@ -6,6 +6,7 @@ import employee_management.exception.NotFoundException;
 import employee_management.model.Employee;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class EmployeeRepository {
     public ArrayList<Employee> findAll() {
@@ -45,7 +46,7 @@ public class EmployeeRepository {
     }
 
     public ArrayList<Employee> findBySalary(int minSalary, int maxSalary) {
-        if(minSalary >= maxSalary) {
+        if (minSalary >= maxSalary) {
             throw new InValidSalaryException("minSalary không được >= maxSalary");
         }
 
@@ -55,6 +56,10 @@ public class EmployeeRepository {
                 rs.add(e);
             }
         }
+
+//        ArrayList<Employee> rs = (ArrayList<Employee>) EmployeeDB.employees.stream()
+//                .filter(e -> e.getSalary() >= minSalary && e.getSalary() <= maxSalary)
+//                .collect(Collectors.toList());
 
         return rs;
     }
