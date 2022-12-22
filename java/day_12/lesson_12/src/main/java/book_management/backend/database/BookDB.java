@@ -6,5 +6,6 @@ import book_management.backend.utils.FileUtils;
 import java.util.List;
 
 public class BookDB {
+    // public static List<Book> books = new ArrayList<>();
     public static List<Book> books = FileUtils.getDataFromFile("books.json");
 }
