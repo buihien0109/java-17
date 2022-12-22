@@ -21,8 +21,13 @@ public class BookUI {
         while (!isQuit) {
             showMenu();
 
-            System.out.print("Nhập lựa chọn : ");
-            option = Integer.parseInt(sc.nextLine());
+            try {
+                System.out.print("Nhập lựa chọn : ");
+                option = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Lựa chọn không hợp lệ");
+                continue;
+            }
 
             switch (option) {
                 case 1: {
