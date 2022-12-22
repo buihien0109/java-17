@@ -1,6 +1,7 @@
 package book_management.backend.controller;
 
 import book_management.backend.model.Book;
+import book_management.backend.request.CreateBookRequest;
 import book_management.backend.request.UpdateBookRequest;
 import book_management.backend.service.BookService;
 
@@ -23,5 +24,9 @@ public class BookController {
 
     public Book updateBook(int id, UpdateBookRequest request) {
         return bookService.updateBook(id, request);
+    }
+
+    public Book createBook(CreateBookRequest request) {
+        return bookService.createBook(request);
     }
 }

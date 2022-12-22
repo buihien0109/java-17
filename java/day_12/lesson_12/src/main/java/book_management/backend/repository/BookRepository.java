@@ -36,4 +36,9 @@ public class BookRepository {
 
         return book;
     }
+
+    public void save(Book book) {
+        BookDB.books.add(book);
+        FileUtils.setDataToFile("books.json", BookDB.books);
+    }
 }
