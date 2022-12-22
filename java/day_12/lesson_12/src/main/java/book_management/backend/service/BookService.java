@@ -2,6 +2,7 @@ package book_management.backend.service;
 
 import book_management.backend.model.Book;
 import book_management.backend.repository.BookRepository;
+import book_management.backend.request.UpdateBookRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +33,9 @@ public class BookService {
 
         // Có sách -> xóa
         bookRepository.delete(book);
+    }
+
+    public Book updateBook(int id, UpdateBookRequest request) {
+        return bookRepository.update(id, request);
     }
 }

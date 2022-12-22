@@ -3,6 +3,7 @@ package book_management.frontend.ui;
 import book_management.backend.controller.BookController;
 import book_management.backend.exception.NotFoundException;
 import book_management.backend.model.Book;
+import book_management.backend.request.UpdateBookRequest;
 
 import java.util.List;
 import java.util.Scanner;
@@ -62,7 +63,29 @@ public class BookUI {
 
                     break;
                 }
-                case 4: {
+                case 4 : {
+                    System.out.print("Nhập id cần chỉnh sửa : ");
+                    int id = Integer.parseInt(sc.nextLine());
+
+                    System.out.print("Nhập vào tiêu đề : ");
+                    String title = sc.nextLine();
+
+                    System.out.print("Nhập vào tên tác giả : ");
+                    String author = sc.nextLine();
+
+                    UpdateBookRequest request = new UpdateBookRequest(title, author);
+
+                    try {
+                        Book book = bookController.updateBook(id, request);
+                        System.out.println("Thông tin sách sau khi cập nhật là :");
+                        System.out.println(book);
+                    } catch (NotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+                }
+                case 5: {
                     isQuit = true;
                     break;
                 }
@@ -79,6 +102,7 @@ public class BookUI {
         System.out.println("1 - Xem danh sách books");
         System.out.println("2 - Tìm sách theo tên");
         System.out.println("3 - Xóa sách theo id");
-        System.out.println("4 - Thoát\n");
+        System.out.println("4 - Thay đổi thông tin book");
+        System.out.println("5 - Thoát\n");
     }
 }
