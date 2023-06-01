@@ -51,5 +51,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 //
 //    List<User> findTop2ByBirthdayAfter(LocalDate date);
 //
-//    Optional<User> findFirstByBirthdayAfter(LocalDate date);
+    Optional<User> findFirstByBirthdayAfter(LocalDate date);
 }
