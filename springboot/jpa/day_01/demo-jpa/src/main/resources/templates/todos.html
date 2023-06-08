@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <style>
+    .active {
+      color: red;
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+<h2>Todo Application</h2>
+
+<input type="text" placeholder="Enter title" id="todo-input">
+<button id="btn-add">Add</button>
+
+<ul>
+  <li th:each="todo:${todos}" th:id="|id-${todo.id}|">
+    <input type="checkbox" th:checked="${todo.status}" th:onchange="|changeStatus(${todo.id})|">
+    <span th:text="${todo.title}" th:class="${todo.status}?'active':''"></span>
+    <button th:onclick="|editTodo(${todo.id})|">Edit</button>
+    <button th:onclick="|deleteTodo(${todo.id})|">Delete</button>
+  </li>
+</ul>
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+<script th:inline="javascript">
+  //TODO: thêm dòng dưới lại không chạy được???
+  // $(document).ready(function () {
+  function deleteTodo(id) {
+    const isConfirm = window.confirm("Bạn có muốn xóa không?")
+    if (isConfirm) {
+      $.ajax({
+        url: "/api/todos/" + id,
+        type: 'DELETE',
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+          $(`#id-${id}`).remove()
+          alert("Xóa thành công!")
+        },
+        error: function (data) {
+          console.log(data)
+        }
+      });
+    }
+  }
+
+  // edit todo (title)
+
+  function editTodo(id) {
+    let newTitle = prompt("Nhập tiêu đề mới: ")
+    // let todoStatus = $('input[type="checkbox"]').prop('checked');
+    let todoStatus = $(`#id-${id} input`).prop('checked');
+    console.log(todoStatus)
+
+    //kiểm tra title
+    if (newTitle.trim().length === 0) {
+      alert("Tiêu đề không được để trống!")
+      return
+    }
+
+    const request = {title: newTitle, status: todoStatus}
+    console.log(request)
+    $.ajax({
+      url: "/api/todos/" + id,
+      type: 'PUT',
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(request),
+      success:
+              function (data) {
+                $(`ul #id-${id} span`).text(newTitle)
+              },
+      error: function (data) {
+        console.log(data)
+      }
+    });
+  }
+
+  // Thay đổi status
+
+  function changeStatus(id) {
+
+    let todoStatus = $(`#id-${id} input`).prop('checked');
+    console.log(todoStatus)
+    $.get("/api/todos/" + id, function (data) {
+      let requestBody = {title: data.title, status: todoStatus};
+      console.log(requestBody)
+      $.ajax({
+        url: "/api/todos/" + id,
+        type: 'PUT',
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(requestBody),
+        success:
+                function () {
+                  if (todoStatus) {
+                    $(`#id-${id} span`).addClass('active')
+                  } else {
+                    $(`#id-${id} span`).removeClass('active')
+                  }
+                },
+        error: function (data) {
+          console.log(data)
+        }
+      });
+    })
+  }
+
+
+  // Thêm todo: Thêm mới nếu ko tải lại trang ko thể thao tác được các chức năng khác
+  $('#btn-add').click(() => {
+    // Lấy nội dung trong ô input
+    const title = $("#todo-input").val()
+
+    //kiểm tra title
+    if (title.trim().length === 0) {
+      alert("Tiêu đề không được để trống!")
+      return
+    }
+
+    // gọi API thêm dữ liệu
+    const request = {title: title}
+    $.ajax({
+      url: "/api/todos",
+      type: 'POST',
+      contentType: "application/json; charset=utf-8",
+      data: JSON.stringify(request),
+      success:
+              function (data) {
+                $("ul").append(`
+                    <li id="id-${data.id}">
+                    <input type="checkbox">
+                    <span>${data.title}</span>
+                    <button onclick="editTodo(data.id)">Edit</button>
+                    <button onclick="deleteTodo(data.id)">Delete</button>
+                            </li>`)
+                $('#todo-input').val('')
+              },
+      error: function (data) {
+        console.log(data)
+      }
+    });
+
+  })
+  // })
+
+</script>
+
+</body>
+</html>

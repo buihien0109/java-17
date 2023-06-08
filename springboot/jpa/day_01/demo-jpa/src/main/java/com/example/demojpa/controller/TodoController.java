@@ -25,6 +25,13 @@ public class TodoController {
         return "index";
     }
 
+    @GetMapping("/todos")
+    public String getTodos(Model model) {
+        List<Todo> todos = todoRepository.findAll();
+        model.addAttribute("todos", todos);
+        return "todos";
+    }
+
     @PostMapping("api/todos")
     public ResponseEntity<?> createTodo(@RequestBody Todo todo) {
         Todo newTodo = new Todo(null, todo.getTitle(), false);
@@ -56,5 +63,29 @@ public class TodoController {
                 });
         todoRepository.delete(todo);
         return ResponseEntity.noContent().build(); // 204
+    }
+
+    @PutMapping("api/todos/{id}/toggle")
+    public ResponseEntity<?> toggleTodoStatus(@PathVariable Integer id) {
+        // Kiểm tra id
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new RuntimeException("Not found");
+                });
+
+        // Thay đổi trạng thái công việc
+        Boolean status = todo.getStatus();
+        if (status != null) {
+            boolean newStatus = !status;
+            todo.setStatus(newStatus);
+            todoRepository.save(todo);
+        }
+
+        return ResponseEntity.ok(todo); // 200
+    }
+
+    @GetMapping("/api/todos/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        return ResponseEntity.ok(todoRepository.findById(id));
     }
 }
