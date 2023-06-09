@@ -1,10 +1,13 @@
 package com.example.demojparelationship.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 @Getter
 @Setter
 @Entity
@@ -17,4 +20,9 @@ public class Post {
 
     @Column(name = "title")
     private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

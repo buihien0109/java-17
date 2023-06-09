@@ -1,10 +1,14 @@
 package com.example.demojparelationship.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 @Getter
 @Setter
 @Entity
@@ -17,4 +21,7 @@ public class IdentityCard {
 
     @Column(name = "code")
     private String code;
+
+//    @OneToOne(mappedBy = "identityCard")
+//    private User user;
 }

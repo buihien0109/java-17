@@ -1,10 +1,14 @@
 package com.example.demojparelationship.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 @Getter
 @Setter
 @Entity
@@ -23,4 +27,11 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_id")
+    private IdentityCard identityCard;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Post> posts;
 }

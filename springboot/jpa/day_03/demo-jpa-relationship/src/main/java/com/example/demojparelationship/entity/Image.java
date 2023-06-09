@@ -1,11 +1,14 @@
 package com.example.demojparelationship.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 @Getter
 @Setter
 @Entity
@@ -21,7 +24,7 @@ public class Image {
 
     @Lob
     @Column(name = "data", columnDefinition = "LONGBLOB")
-    private String data;
+    private byte[] data;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
