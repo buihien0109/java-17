@@ -1,4 +1,7 @@
 package com.example.demo.repository;
 
-public interface TopicRepository extends org.springframework.data.jpa.repository.JpaRepository<com.example.demo.model.Topic, java.lang.Integer> {
+import com.example.demo.model.Topic;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TopicRepository extends JpaRepository<Topic, Integer> {
 }

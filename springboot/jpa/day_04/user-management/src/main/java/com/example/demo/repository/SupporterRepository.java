@@ -1,4 +1,7 @@
 package com.example.demo.repository;
 
-public interface SupporterRepository extends org.springframework.data.jpa.repository.JpaRepository<com.example.demo.model.Supporter, java.lang.Integer> {
+import com.example.demo.model.Supporter;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SupporterRepository extends JpaRepository<Supporter, Integer> {
 }

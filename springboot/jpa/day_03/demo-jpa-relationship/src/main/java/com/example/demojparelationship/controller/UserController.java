@@ -1,5 +1,6 @@
 package com.example.demojparelationship.controller;
 
+import com.example.demojparelationship.entity.Image;
 import com.example.demojparelationship.service.ImageService;
 import com.example.demojparelationship.service.UserService;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class UserController {
     // 1. Upload file
     @PostMapping("{id}/files")
     public ResponseEntity<?> uploadFile(@ModelAttribute("file") MultipartFile file, @PathVariable Integer id) {
-        return null;
+        Image image =  imageService.uploadImage(id, file);
+        return ResponseEntity.ok(image);
     }
 }
