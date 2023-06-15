@@ -43,21 +43,100 @@
                         </button>
                     </td>
                 </tr>
-                <tr>
-                    <th>2</th>
-                    <td>application/pdf</td>
-                    <td>03/02/2023</td>
-                    <td><a href="#" target="_blank">Xem chi tiết</a></td>
-                    <td>
-                        <button class="btn btn-danger">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    let imageList = [[${imageList}]];
+    let userId = [[${userId}]];
+    console.log(imageList);
+
+    // Render danh sách image
+    const renderImageList = (imageList) => {
+        $("tbody").html("");
+
+        let html = "";
+        for (let i = 0; i < imageList.length; i++) {
+            const img = imageList[i];
+            html += `
+                <tr>
+                    <th>${img.id}</th>
+                    <td>${img.type}</td>
+                    <td>${formatDate(img.createdAt)}</td>
+                    <td><a href="/api/v1/files/${img.id}" target="_blank">Xem chi tiết</a></td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteImage(${img.id})">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `;
+        };
+        $("tbody").html(html);
+    }
+
+    const formatDate = dateString => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = `0${date.getMonth() + 1}`.slice(-2); // 02 -> 02, 010 -> 10
+        const day = `0${date.getDate() + 1}`.slice(-2);
+
+        return `${day}/${month}/${year}`;
+    }
+
+    // Xóa image
+    const deleteImage = id => {
+        const isConfirm = window.confirm("Bạn có muốn xóa không");
+        if(!isConfirm) {
+            return;
+        }
+        $.ajax({
+            url: "/api/v1/files/" + id,
+            type: 'DELETE',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                imageList = imageList.filter(img => img.id !== id);
+                renderImageList(imageList);
+                alert("Xóa thành công!")
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    }
+
+    // Upload image
+    $("#input-file").change((e) => {
+        const file = e.target.files[0];
+        console.log(file);
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        $.ajax({
+            url: "/api/v1/users/" + userId + "/files",
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data : formData,
+            success: function (data) {
+                imageList.push(data);
+                renderImageList(imageList);
+                alert("Upload thành công!")
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
+    })
+
+    renderImageList(imageList);
+
+</script>
 </body>
 </html>

@@ -28,17 +28,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th>1</th>
-                    <td>Nguyễn Văn A</td>
-                    <td>a@gmail.com</td>
-                    <td><a href="#">Xem chi tiết</a></td>
-                </tr>
-                <tr>
-                    <th>2</th>
-                    <td>Trần Văn B</td>
-                    <td>b@gmail.com</td>
-                    <td><a href="#">Xem chi tiết</a></td>
+                <tr th:each="user : ${userList}">
+                    <th th:text="${user.id}">1</th>
+                    <td th:text="${user.name}">Nguyễn Văn A</td>
+                    <td th:text="${user.email}">a@gmail.com</td>
+                    <td><a th:href="@{/users/{id}/files (id=${user.id})}">Xem chi tiết</a></td>
                 </tr>
                 </tbody>
             </table>

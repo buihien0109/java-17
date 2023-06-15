@@ -29,6 +29,7 @@ public class WebController {
     public String getFilesPage(Model model, @PathVariable Integer id) {
         List<Image> imageList = imageService.getImagesOfUser(id);
         model.addAttribute("imageList", imageList);
+        model.addAttribute("userId", id);
         return "file";
     }
 }
