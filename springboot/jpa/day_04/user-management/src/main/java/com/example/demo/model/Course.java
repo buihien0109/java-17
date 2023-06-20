@@ -3,6 +3,8 @@ package com.example.demo.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -28,4 +30,14 @@ public class Course {
 
     @Column(name = "thumbnail")
     private String thumbnail;
+
+    @ManyToOne
+    @JoinColumn(name = "supporter_id")
+    private Supporter supporter;
+
+    @ManyToMany
+    @JoinTable(name = "course_topic",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    private Set<Topic> topics = new LinkedHashSet<>();
 }

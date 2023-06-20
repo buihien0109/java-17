@@ -52,9 +52,9 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script th:inline="javascript">
+    // Lưu lại các thông tin trả về từ server
     let imageList = [[${imageList}]];
     let userId = [[${userId}]];
-    console.log(imageList);
 
     // Render danh sách image
     const renderImageList = (imageList) => {
@@ -76,15 +76,17 @@
                     </td>
                 </tr>
             `;
-        };
+        }
+        ;
         $("tbody").html(html);
     }
 
+    // Format ngày tháng năm theo định dạng dd/mm/yyyy
     const formatDate = dateString => {
         const date = new Date(dateString);
         const year = date.getFullYear();
         const month = `0${date.getMonth() + 1}`.slice(-2); // 02 -> 02, 010 -> 10
-        const day = `0${date.getDate() + 1}`.slice(-2);
+        const day = `0${date.getDate() + 1}`.slice(-2); // slice là method cắt chuỗi, "-2" là cắt từ cuối lên
 
         return `${day}/${month}/${year}`;
     }
@@ -92,7 +94,7 @@
     // Xóa image
     const deleteImage = id => {
         const isConfirm = window.confirm("Bạn có muốn xóa không");
-        if(!isConfirm) {
+        if (!isConfirm) {
             return;
         }
         $.ajax({
@@ -100,6 +102,7 @@
             type: 'DELETE',
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                // Xóa trong mảng ban đầu và render lại giao diện sau khi xóa
                 imageList = imageList.filter(img => img.id !== id);
                 renderImageList(imageList);
                 alert("Xóa thành công!")
@@ -123,8 +126,9 @@
             type: 'POST',
             contentType: false,
             processData: false,
-            data : formData,
+            data: formData,
             success: function (data) {
+                // Thêm vào mảng ban đầu và render lại giao diện sau khi thêm
                 imageList.push(data);
                 renderImageList(imageList);
                 alert("Upload thành công!")
@@ -135,8 +139,8 @@
         });
     })
 
+    // Render danh sách image khi vừa vào trang
     renderImageList(imageList);
-
 </script>
 </body>
 </html>
