@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-md-4" th:fragment="card(course)">
+    <a th:href="@{/khoa-hoc/{id} (id=${course.id})}">
+        <div class="course-item shadow-sm rounded mb-4">
+            <div class="course-item-image">
+                <img th:src="${course.thumbnail} ?: 'https://placehold.co/600x400'"
+                     th:alt="${course.name}">
+            </div>
+            <div class="course-item-info p-3">
+                <h2 class="fs-5 mb-3 text-dark" th:text="${course.name}">Spring Boot - Web Back
+                    End</h2>
+                <p class="type fw-light text-black-50"
+                   th:text="${course.type} == 'online' ? 'Trực tuyến' : 'Phòng lab'">Trực
+                    tuyến</p>
+            </div>
+        </div>
+    </a>
+</div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="layout/layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: .course-container}, ~{:: #javascript})">
+
+<head>
+    <title>Danh sách khóa học phòng lab</title>
+
+    <th:block id="css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css"
+              integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg=="
+              crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    </th:block>
+</head>
+
+<body>
+<div class="course-container mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h2 class="fs-5 mb-4">Chủ đề</h2>
+                <div class="topic-item input-group d-flex align-items-center mb-1">
+                    <input type="radio" value="Backend" id="backend" name="topic">
+                    <label for="backend" class="ms-2 fs-5">Lập trình Backend</label>
+                </div>
+                <div class="topic-item input-group d-flex align-items-center mb-1">
+                    <input type="radio" value="Frontend" id="frontend" name="topic">
+                    <label for="frontend" class="ms-2 fs-5">Lập trình Frontend</label>
+                </div>
+                <div class="topic-item input-group d-flex align-items-center mb-1">
+                    <input type="radio" value="Di động" id="mobile" name="topic">
+                    <label for="mobile" class="ms-2 fs-5">Lập trình di động</label>
+                </div>
+                <div class="topic-item input-group d-flex align-items-center mb-1">
+                    <input type="radio" value="Database" id="database" name="topic">
+                    <label for="database" class="ms-2 fs-5">Cơ sở dữ liệu</label>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="seach-form d-flex align-items-center rounded shadow-sm mb-4 pe-3">
+                            <input type="text" placeholder="Tìm kiếm khóa học"
+                                   class="form-control border-0 seach-form-input">
+                            <span class="text-black-50 seach-form-button"><i
+                                    class="fa-solid fa-magnifying-glass"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-list row">
+                    <div class="col-md-4">
+                        <a href="detail.html">
+                            <div class="course-item shadow-sm rounded mb-4">
+                                <div class="course-item-image">
+                                    <img src="https://media.techmaster.vn/api/static/8028/bpfneoc51co8tcg6lek0"
+                                         alt="khoa hoc">
+                                </div>
+                                <div class="course-item-info p-3">
+                                    <h2 class="fs-5 mb-3 text-dark">Spring Boot - Web Back End</h2>
+                                    <p class="type fw-light text-black-50">Phòng lab</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="pagination-container" class="d-flex justify-content-center mb-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block id="javascript">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+            integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js"
+            integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script th:inline="javascript">
+        let courseList = [[${courseList}]];
+
+        option.addEvent("change", () => {
+            // Lấy ra được cái lựa chọn của họ
+            const topic = "backend"
+
+            // Lọc ra các khóa học tương ứng "courseList"
+            const renderedCourse = courseList.filter()
+
+            // Render lại trên giao diện renderCourse
+            renderCourse(renderedCourse);
+        })
+
+        const renderCourse = courseList => {
+            $('#pagination-container').pagination({
+                dataSource: courseList,
+                pageSize: 6,
+                callback: function(data, pagination) {
+                    let html = "";
+                    $.each(data, function(index, course) {
+                        html += `
+                        <div class="col-md-4">
+                            <a href="/khoa-hoc/${course.id}">
+                                <div class="course-item shadow-sm rounded mb-4">
+                                    <div class="course-item-image">
+                                        <img src="${course.thumbnail}"
+                                             alt="${course.name}">
+                                    </div>
+                                    <div class="course-item-info p-3">
+                                        <h2 class="fs-5 mb-3 text-dark">${course.name}</h2>
+                                        <p class="type fw-light text-black-50">${course.type == "online" ? "Trực tuyến" : "Phòng lab"}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    `
+                    });
+                    $('.course-list').html(html);
+                }
+        });
+    </script>
+</th:block>
+</body>
+
+</html>

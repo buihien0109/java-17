@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .course-container}, ~{})">
+
+<head>
+    <title>Danh sách khóa học trực tuyến</title>
+</head>
+
+<body>
+<div class="course-container mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h2 class="fs-5 mb-4">Chủ đề</h2>
+                <div th:each="topic : ${topicList}" class="topic-item input-group d-flex align-items-center mb-1">
+                    <input type="radio" th:value="${topic.name}" th:id="${topic.name}" name="topic">
+                    <label th:for="${topic.name}" class="ms-2 fs-5" th:text="${topic.name}">Lập trình Backend</label>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="seach-form d-flex align-items-center rounded shadow-sm mb-4 pe-3">
+                            <input type="text" placeholder="Tìm kiếm khóa học"
+                                   class="form-control border-0 seach-form-input">
+                            <span class="text-black-50 seach-form-button"><i
+                                    class="fa-solid fa-magnifying-glass"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-list row">
+                    <th:block th:with="courseList = ${pageInfo.getContent()}">
+                        <th:block th:each="course : ${courseList}">
+                            <th:block th:replace="fragments/card :: card(${course})"></th:block>
+                        </th:block>
+                    </th:block>
+                </div>
+
+                <nav aria-label="Page navigation" class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/khoa-hoc/online?page={page} (page=${currentPage - 1})}">Previous</a>
+                        </li>
+                        <li class="page-item" th:each="page : ${#numbers.sequence(1, pageInfo.getTotalPages())}" th:classappend="${currentPage == page ? 'active' : ''}">
+                            <a class="page-link" th:href="@{/khoa-hoc/online(page=${page})}"><span th:text="${page}"></span></a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == pageInfo.getTotalPages() ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/khoa-hoc/online(page=${currentPage + 1})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

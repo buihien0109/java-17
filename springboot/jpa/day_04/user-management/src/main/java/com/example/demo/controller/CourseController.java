@@ -24,13 +24,16 @@ public class CourseController {
     @GetMapping("/")
     public String getAllCourse(@RequestParam(required = false, defaultValue = "1") Integer page,
                                @RequestParam(required = false, defaultValue = "6") Integer pageSize,
+                               @RequestParam(required = false) String topic,
+                               @RequestParam(required = false) String term,
                                Model model) {
         Page<Course> pageInfo = courseService.getAllCourse(page, pageSize);
         List<Topic> topicList = topicService.getAllTopic();
 
         model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("currentPage", page);
         model.addAttribute("topicList", topicList);
-        return "course-list";
+        return "web/course-list";
     }
 
     @GetMapping("/khoa-hoc/online")
@@ -41,8 +44,9 @@ public class CourseController {
         List<Topic> topicList = topicService.getAllTopic();
 
         model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("currentPage", page);
         model.addAttribute("topicList", topicList);
-        return "course-online-list";
+        return "web/course-online-list";
     }
 
     @GetMapping("/khoa-hoc/onlab")
@@ -52,13 +56,13 @@ public class CourseController {
 
         model.addAttribute("courseList", courseList);
         model.addAttribute("topicList", topicList);
-        return "course-onlab-list";
+        return "web/course-onlab-list";
     }
 
     @GetMapping("/khoa-hoc/{id}")
     public String getDetailCourse(@PathVariable Integer id, Model model) {
         Course course = courseService.getCourseDetail(id);
         model.addAttribute("course", course);
-        return "detail";
+        return "web/detail";
     }
 }
