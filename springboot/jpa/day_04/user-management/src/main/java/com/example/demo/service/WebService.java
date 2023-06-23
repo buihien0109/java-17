@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Course;
+import com.example.demo.entity.Course;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.CourseRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CourseService {
+public class WebService {
 
     private final CourseRepository courseRepository;
 
@@ -33,7 +34,7 @@ public class CourseService {
     public Course getCourseDetail(Integer id) {
         return courseRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new RuntimeException("Not found course with id = " + id);
+                    throw new NotFoundException("Not found course with id = " + id);
                 });
     }
 }

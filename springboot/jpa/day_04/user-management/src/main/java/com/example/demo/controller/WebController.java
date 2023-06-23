@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Course;
-import com.example.demo.model.Topic;
-import com.example.demo.service.CourseService;
+import com.example.demo.entity.Course;
+import com.example.demo.entity.Topic;
+import com.example.demo.service.WebService;
 import com.example.demo.service.TopicService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +16,8 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class CourseController {
-    private final CourseService courseService;
+public class WebController {
+    private final WebService webService;
     private final TopicService topicService;
 
 
@@ -27,7 +27,7 @@ public class CourseController {
                                @RequestParam(required = false) String topic,
                                @RequestParam(required = false) String term,
                                Model model) {
-        Page<Course> pageInfo = courseService.getAllCourse(page, pageSize);
+        Page<Course> pageInfo = webService.getAllCourse(page, pageSize);
         List<Topic> topicList = topicService.getAllTopic();
 
         model.addAttribute("pageInfo", pageInfo);
@@ -40,7 +40,7 @@ public class CourseController {
     public String getOnlineCourse(@RequestParam(required = false, defaultValue = "1") Integer page,
                                   @RequestParam(required = false, defaultValue = "6") Integer pageSize,
                                   Model model) {
-        Page<Course> pageInfo = courseService.getAllCourse(page, pageSize, "online");
+        Page<Course> pageInfo = webService.getAllCourse(page, pageSize, "online");
         List<Topic> topicList = topicService.getAllTopic();
 
         model.addAttribute("pageInfo", pageInfo);
@@ -51,7 +51,7 @@ public class CourseController {
 
     @GetMapping("/khoa-hoc/onlab")
     public String getOnLabCourse(Model model) {
-        List<Course> courseList = courseService.getAllCourse("onlab");
+        List<Course> courseList = webService.getAllCourse("onlab");
         List<Topic> topicList = topicService.getAllTopic();
 
         model.addAttribute("courseList", courseList);
@@ -61,7 +61,7 @@ public class CourseController {
 
     @GetMapping("/khoa-hoc/{id}")
     public String getDetailCourse(@PathVariable Integer id, Model model) {
-        Course course = courseService.getCourseDetail(id);
+        Course course = webService.getCourseDetail(id);
         model.addAttribute("course", course);
         return "web/detail";
     }

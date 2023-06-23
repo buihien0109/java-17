@@ -1,8 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.model.Course;
-import com.example.demo.model.Supporter;
-import com.example.demo.model.Topic;
+import com.example.demo.entity.Course;
+import com.example.demo.entity.Supporter;
+import com.example.demo.entity.Topic;
 import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.SupporterRepository;
 import com.example.demo.repository.TopicRepository;

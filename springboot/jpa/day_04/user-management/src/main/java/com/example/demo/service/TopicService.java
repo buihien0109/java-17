@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Topic;
+import com.example.demo.entity.Topic;
 import com.example.demo.repository.TopicRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

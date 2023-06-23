@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="layout/layout-admin :: main-fragment(~{:: title}, ~{}, ~{:: .course-list}, ~{})">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Danh sách khóa học</title>
 </head>
+
 <body>
-$END$
+<!-- BODY -->
+<div class="course-list mt-4 mb-4">
+    <div class="container">
+        <div class="mb-4">
+            <a th:href="@{/admin/courses/create}" class="btn-custom btn-create-course">
+                <span><i class="fa-solid fa-plus"></i></span>
+                Tạo khóa học
+            </a>
+            <a th:href="@{/admin/courses}" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-arrow-rotate-right"></i></span>
+                Refresh
+            </a>
+        </div>
+
+        <div class="course-list-inner p-2">
+            <table class="table course-table">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên khóa học</th>
+                    <th>Hình thức</th>
+                    <th>Chủ đề</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course, iS : ${pageInfo.getContent()}">
+                    <td th:text="${iS.index + 1}">1</td>
+                    <td>
+                        <a th:href="@{/admin/courses/{id} (id=${course.id})}" th:text="${course.name}">
+                            SpringBoot - Web Back End
+                        </a>
+                    </td>
+                    <td>
+                        <span class="badge bg-success" th:text="${course.type}"></span>
+                    </td>
+                    <td>
+                        <span th:each="topic : ${course.getTopics}" th:text="${topic.name}"
+                              class="badge bg-secondary me-1"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 </body>
+
 </html>
